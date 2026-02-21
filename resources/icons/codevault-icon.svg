@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Brain outline -->
+  <path d="M12 5c-1.5-1.5-4-2-6 0s-2 5 0 7l6 6 6-6c2-2 2-5 0-7s-4.5-1.5-6 0z"/>
+  <!-- Memory nodes -->
+  <circle cx="9" cy="9" r="1.5" fill="currentColor"/>
+  <circle cx="15" cy="9" r="1.5" fill="currentColor"/>
+  <circle cx="12" cy="13" r="1.5" fill="currentColor"/>
+  <!-- Connections -->
+  <line x1="9" y1="9" x2="12" y2="13"/>
+  <line x1="15" y1="9" x2="12" y2="13"/>
+  <line x1="9" y1="9" x2="15" y2="9"/>
+</svg>

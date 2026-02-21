@@ -1,0 +1,198 @@
+{
+  "name": "codevault",
+  "displayName": "CodeVault — Memory for AI Coding Agents",
+  "description": "Your coding agent never forgets. Persistent memory for Claude Code, Copilot, Cursor and more.",
+  "version": "0.1.0",
+  "publisher": "codevault",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Machine Learning",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "memory",
+    "agent",
+    "claude",
+    "copilot",
+    "cursor",
+    "persistent memory"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codevault.remember",
+        "title": "CodeVault: Remember This",
+        "icon": "$(lightbulb)"
+      },
+      {
+        "command": "codevault.recall",
+        "title": "CodeVault: Recall Memories",
+        "icon": "$(search)"
+      },
+      {
+        "command": "codevault.forget",
+        "title": "CodeVault: Forget Memory"
+      },
+      {
+        "command": "codevault.showMemories",
+        "title": "CodeVault: Show All Memories"
+      },
+      {
+        "command": "codevault.exportContext",
+        "title": "CodeVault: Copy Memory Context for Agent",
+        "icon": "$(clippy)"
+      },
+      {
+        "command": "codevault.analyzeProject",
+        "title": "CodeVault: Analyze Current Project"
+      },
+      {
+        "command": "codevault.startBackend",
+        "title": "CodeVault: Start Memory Backend"
+      },
+      {
+        "command": "codevault.refreshMemories",
+        "title": "CodeVault: Refresh Memories",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "codevault.switchAgent",
+        "title": "CodeVault: Switch Agent",
+        "icon": "$(account)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codevault-sidebar",
+          "title": "CodeVault",
+          "icon": "resources/icons/codevault-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "codevault-sidebar": [
+        {
+          "id": "codevault-memories",
+          "name": "Memories",
+          "type": "tree"
+        },
+        {
+          "id": "codevault-project",
+          "name": "Project Knowledge",
+          "type": "webview"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "codevault.remember",
+          "when": "editorHasSelection",
+          "group": "codevault"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "codevault.refreshMemories",
+          "when": "view == codevault-memories",
+          "group": "navigation"
+        },
+        {
+          "command": "codevault.exportContext",
+          "when": "view == codevault-memories",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "CodeVault",
+      "properties": {
+        "codevault.backendUrl": {
+          "type": "string",
+          "default": "http://localhost:8420",
+          "description": "URL of the AgentVault backend"
+        },
+        "codevault.autoCapture": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically capture project events"
+        },
+        "codevault.autoCaptureGit": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically capture git commits"
+        },
+        "codevault.autoCaptureFiles": {
+          "type": "boolean",
+          "default": true,
+          "description": "Capture important files (README, config, etc.)"
+        },
+        "codevault.agentId": {
+          "type": "string",
+          "default": "",
+          "description": "Agent ID for memory storage (defaults to project name)"
+        },
+        "codevault.maxContextMemories": {
+          "type": "number",
+          "default": 10,
+          "description": "Maximum memories to include in exported context"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "codevault.remember",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "codevault.recall",
+        "key": "ctrl+shift+m",
+        "mac": "cmd+shift+m"
+      },
+      {
+        "command": "codevault.exportContext",
+        "key": "ctrl+shift+e",
+        "mac": "cmd+shift+e"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/node-fetch": "^2.6.13",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codevault/codevault-vscode"
+  },
+  "license": "MIT"
+}
