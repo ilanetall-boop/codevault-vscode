@@ -117,7 +117,7 @@ export function registerCommands(
     // Analyze project command
     const analyzeProjectCmd = vscode.commands.registerCommand('codevault.analyzeProject', async () => {
         try {
-            vscode.window.withProgress({
+            await vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
                 title: 'Analyzing project...',
                 cancellable: false,

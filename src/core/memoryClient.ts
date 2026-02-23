@@ -353,13 +353,22 @@ export class MemoryClient {
             fetchFn = nodeFetch.default as unknown as typeof fetch;
         }
 
-        return fetchFn(url, {
-            ...options,
-            headers: {
-                'Accept': 'application/json',
-                ...options?.headers,
-            },
-        });
+        // 10 second timeout to prevent hanging requests
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+        try {
+            return await fetchFn(url, {
+                ...options,
+                signal: controller.signal,
+                headers: {
+                    'Accept': 'application/json',
+                    ...options?.headers,
+                },
+            });
+        } finally {
+            clearTimeout(timeoutId);
+        }
     }
 
     /**

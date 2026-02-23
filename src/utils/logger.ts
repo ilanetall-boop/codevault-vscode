@@ -5,15 +5,12 @@
 import * as vscode from 'vscode';
 import { EXTENSION_NAME } from './constants';
 
-let outputChannel: vscode.OutputChannel | undefined;
-
 export class Logger {
     private static channel: vscode.OutputChannel;
 
     static init(context: vscode.ExtensionContext): void {
         this.channel = vscode.window.createOutputChannel(EXTENSION_NAME);
         context.subscriptions.push(this.channel);
-        outputChannel = this.channel;
     }
 
     static info(message: string, ...args: unknown[]): void {
@@ -59,8 +56,4 @@ export class Logger {
             this.channel.show();
         }
     }
-}
-
-export function getOutputChannel(): vscode.OutputChannel | undefined {
-    return outputChannel;
 }

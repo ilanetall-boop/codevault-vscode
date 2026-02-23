@@ -101,42 +101,4 @@ export class ManualCapture {
         }
     }
 
-    /**
-     * Capture a text note without code.
-     */
-    async captureNote(): Promise<void> {
-        const note = await vscode.window.showInputBox({
-            prompt: 'What do you want to remember?',
-            placeHolder: 'Enter your note...',
-        });
-
-        if (!note) {
-            return;
-        }
-
-        const typeChoice = await vscode.window.showQuickPick(
-            [
-                { label: '💡 Semantic', description: 'A fact or piece of knowledge', value: 'semantic' as MemoryType },
-                { label: '📅 Episodic', description: 'An event or experience', value: 'episodic' as MemoryType },
-                { label: '📋 Procedural', description: 'A how-to or procedure', value: 'procedural' as MemoryType },
-            ],
-            { placeHolder: 'What type of memory is this?' }
-        );
-
-        if (!typeChoice) {
-            return;
-        }
-
-        const memory = await this.memoryManager.remember(note, typeChoice.value, {
-            importance: 0.7,
-            tags: ['manual', 'note'],
-            source: 'manual-capture',
-        });
-
-        if (memory) {
-            vscode.window.showInformationMessage(`Remembered! (${typeChoice.label})`);
-        } else {
-            vscode.window.showInformationMessage('Memory queued (backend offline)');
-        }
-    }
 }

@@ -83,17 +83,25 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
     private async handleSearch(query: string): Promise<void> {
         if (!this._view || !query) {return;}
 
-        const result = await this.memoryManager.recall(query, { top_k: 10 });
+        try {
+            const result = await this.memoryManager.recall(query, { top_k: 10 });
 
-        this._view.webview.postMessage({
-            command: 'searchResults',
-            data: {
-                memories: result.memories,
-                scores: result.relevance_scores,
-                total: result.total_found,
-                queryTime: result.query_time_ms,
-            },
-        });
+            this._view.webview.postMessage({
+                command: 'searchResults',
+                data: {
+                    memories: result.memories,
+                    scores: result.relevance_scores,
+                    total: result.total_found,
+                    queryTime: result.query_time_ms,
+                },
+            });
+        } catch (error) {
+            Logger.error('Search failed:', error);
+            this._view.webview.postMessage({
+                command: 'searchResults',
+                data: { memories: [], scores: [], total: 0, queryTime: 0 },
+            });
+        }
     }
 
     /**
@@ -105,6 +113,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline';">
     <title>CodeVault</title>
     <style>
         :root {
@@ -285,7 +294,7 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
     <div class="memories-list" id="memoriesList">
         <div class="empty-state">
             <p>No memories yet.</p>
-            <p>Select code and press Ctrl+Shift+R to remember.</p>
+            <p>Select code and press Ctrl+Alt+R to remember.</p>
         </div>
     </div>
 

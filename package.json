@@ -151,19 +151,19 @@
     "keybindings": [
       {
         "command": "codevault.remember",
-        "key": "ctrl+shift+r",
-        "mac": "cmd+shift+r",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r",
         "when": "editorTextFocus"
       },
       {
         "command": "codevault.recall",
-        "key": "ctrl+shift+m",
-        "mac": "cmd+shift+m"
+        "key": "ctrl+alt+m",
+        "mac": "cmd+alt+m"
       },
       {
         "command": "codevault.exportContext",
-        "key": "ctrl+shift+e",
-        "mac": "cmd+shift+e"
+        "key": "ctrl+alt+e",
+        "mac": "cmd+alt+e"
       }
     ]
   },
@@ -192,7 +192,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/codevault/codevault-vscode"
+    "url": "https://github.com/ilanetall-boop/codevault-vscode"
   },
   "license": "MIT"
 }

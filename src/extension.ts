@@ -16,6 +16,7 @@ import { registerCommands } from './commands';
 import { Logger } from './utils/logger';
 import { getConfig } from './utils/config';
 
+let memoryClient: MemoryClient;
 let memoryManager: MemoryManager;
 let autoCapture: AutoCapture;
 let statusBar: StatusBarManager;
@@ -30,7 +31,8 @@ export async function activate(context: vscode.ExtensionContext) {
     const wsConfig = vscode.workspace.getConfiguration('codevault');
 
     // Initialize core components
-    const client = new MemoryClient(config.backendUrl);
+    memoryClient = new MemoryClient(config.backendUrl);
+    const client = memoryClient;
     const analyzer = new ProjectAnalyzer();
     memoryManager = new MemoryManager(client, wsConfig);
 
@@ -103,12 +105,13 @@ export async function activate(context: vscode.ExtensionContext) {
                 'memoryDetail',
                 'Memory Detail',
                 vscode.ViewColumn.Beside,
-                {}
+                { enableScripts: false }
             );
 
             panel.webview.html = `<!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
     <style>
         body {
             font-family: var(--vscode-font-family);
@@ -174,7 +177,9 @@ export async function activate(context: vscode.ExtensionContext) {
                 return text
                     .replace(/&/g, '&amp;')
                     .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;');
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
             }
         })
     );
@@ -185,6 +190,9 @@ export async function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
     if (autoCapture) {
         autoCapture.stop();
+    }
+    if (memoryClient) {
+        memoryClient.dispose();
     }
     if (statusBar) {
         statusBar.dispose();

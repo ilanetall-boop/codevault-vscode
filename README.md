@@ -21,7 +21,7 @@ You waste time re-explaining the same things over and over.
 
 CodeVault gives your coding agent **persistent memory**. It automatically learns about your project and injects that knowledge into every conversation.
 
-**Press `Ctrl+Shift+E` -> paste in your agent -> it knows everything.**
+**Press `Ctrl+Alt+E` -> paste in your agent -> it knows everything.**
 
 ---
 
@@ -89,9 +89,9 @@ Open any project folder in VS Code. CodeVault automatically:
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+Shift+E` | **Export context** — Copy memory context, paste in your agent |
-| `Ctrl+Shift+R` | **Remember** — Save selected code or notes to memory |
-| `Ctrl+Shift+M` | **Recall** — Search your memories |
+| `Ctrl+Alt+E` | **Export context** — Copy memory context, paste in your agent |
+| `Ctrl+Alt+R` | **Remember** — Save selected code or notes to memory |
+| `Ctrl+Alt+M` | **Recall** — Search your memories |
 
 ---
 
@@ -101,7 +101,6 @@ Open any project folder in VS Code. CodeVault automatically:
 CodeVault silently learns from your workflow:
 - **Git commits** -> stored as episodic memories
 - **File changes** -> architecture knowledge updated
-- **Terminal commands** -> procedures learned
 
 ### 3 Memory Types
 - **Semantic** (facts): *"Project uses FastAPI + PostgreSQL"*
@@ -109,7 +108,7 @@ CodeVault silently learns from your workflow:
 - **Procedural** (how-tos): *"To deploy: npm run build -> vercel deploy"*
 
 ### One-Click Context Export
-`Ctrl+Shift+E` generates a rich context block tailored to your current file and project. Paste it in any AI agent conversation.
+`Ctrl+Alt+E` generates a rich context block tailored to your current file and project. Paste it in any AI agent conversation.
 
 ### Smart Recall
 Finds the right memories based on what you're currently working on.
@@ -146,6 +145,8 @@ CodeVault is powered by [AgentVault](https://github.com/ilanetall-boop/AgentVaul
 | `codevault.backendUrl` | `http://localhost:8420` | AgentVault backend URL |
 | `codevault.autoCapture` | `true` | Auto-capture events |
 | `codevault.autoCaptureGit` | `true` | Capture git commits |
+| `codevault.autoCaptureFiles` | `true` | Capture important file changes |
+| `codevault.agentId` | `""` | Agent ID (defaults to project name) |
 | `codevault.maxContextMemories` | `10` | Max memories in context export |
 
 ---
