@@ -21,6 +21,7 @@
     "cursor",
     "persistent memory"
   ],
+  "icon": "resources/icons/codevault-icon.png",
   "activationEvents": [
     "onStartupFinished"
   ],
